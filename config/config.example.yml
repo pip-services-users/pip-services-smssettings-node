@@ -1,0 +1,18 @@
+---
+- descriptor: "pip-services-commons:logger:console:default:1.0"
+  level: "trace"
+
+- descriptor: "pip-services-smssettings:persistence:file:default:1.0"
+  path: "./data/sms_settings.json"
+
+- descriptor: "pip-services-smssettings:controller:default:default:1.0"
+  options:
+    magic_code: '123'
+    verify_on_create: true
+    verify_on_update: true
+
+- descriptor: "pip-services-smssettings:service:http:default:1.0"
+  connection:
+    protocol: "http"
+    host: "0.0.0.0"
+    port: 8080

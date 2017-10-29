@@ -12,7 +12,7 @@ import { SmsSettingsMongoDbPersistence } from '../persistence/SmsSettingsMongoDb
 import { SmsSettingsController } from '../logic/SmsSettingsController';
 import { SmsSettingsSenecaServiceV1 } from '../services/version1/SmsSettingsSenecaServiceV1';
 import { ActivitiesSenecaClientV1 } from 'pip-clients-activities-node';
-import { SmsDeliverySenecaClientV1 } from 'pip-clients-smsdelivery-node';
+import { SmsSenecaClientV1 } from 'pip-clients-sms-node';
 
 export class SmsSettingsSenecaPlugin extends SenecaPlugin {
     public constructor(seneca: any, options: any) {
@@ -30,7 +30,7 @@ export class SmsSettingsSenecaPlugin extends SenecaPlugin {
         let activitiesOptions = options.activities || {};
         activitiesClient.configure(ConfigParams.fromValue(activitiesOptions));
 
-        let smsClient = new SmsDeliverySenecaClientV1();
+        let smsClient = new SmsSenecaClientV1();
         let smsOptions = options.sms || {};
         smsClient.configure(ConfigParams.fromValue(smsOptions));
 
@@ -60,7 +60,7 @@ export class SmsSettingsSenecaPlugin extends SenecaPlugin {
             new Descriptor('pip-services-commons', 'logger', 'console', 'default', '1.0'), logger,
             new Descriptor('pip-services-net', 'seneca', 'instance', 'default', '1.0'), senecaInstance,
             new Descriptor('pip-services-activities', 'client', 'seneca', 'default', '1.0'), activitiesClient,
-            new Descriptor('pip-services-smsdelivery', 'client', 'seneca', 'default', '1.0'), smsClient,
+            new Descriptor('pip-services-sms', 'client', 'seneca', 'default', '1.0'), smsClient,
             new Descriptor('pip-services-smssettings', 'persistence', persistenceType, 'default', '1.0'), persistence,
             new Descriptor('pip-services-smssettings', 'controller', 'default', 'default', '1.0'), controller,
             new Descriptor('pip-services-smssettings', 'service', 'seneca', 'default', '1.0'), service

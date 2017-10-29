@@ -22,9 +22,9 @@ import { CompositeLogger } from 'pip-services-commons-node';
 import { PartyActivityV1 } from 'pip-clients-activities-node';
 import { IActivitiesClientV1 } from 'pip-clients-activities-node';
 import { MessageTemplatesResolverV1 } from 'pip-clients-msgtemplates-node';
-import { SmsMessageV1 } from 'pip-clients-smsdelivery-node';
-import { SmsRecipientV1 } from 'pip-clients-smsdelivery-node';
-import { ISmsDeliveryClientV1 } from 'pip-clients-smsdelivery-node';
+import { SmsMessageV1 } from 'pip-clients-sms-node';
+import { SmsRecipientV1 } from 'pip-clients-sms-node';
+import { ISmsClientV1 } from 'pip-clients-sms-node';
 
 import { SmsSettingsV1 } from '../data/version1/SmsSettingsV1';
 import { SmsSettingsActivityTypeV1 } from '../data/version1/SmsSettingsActivityTypeV1';
@@ -38,7 +38,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         'dependencies.persistence', 'pip-services-smssettings:persistence:*:*:1.0',
         'dependencies.activities', 'pip-services-activities:client:*:*:1.0',
         'dependencies.msgtemplates', 'pip-services-msgtemplates:client:*:*:1.0',
-        'dependencies.smsdelivery', 'pip-services-smsdelivery:client:*:*:1.0',
+        'dependencies.smsdelivery', 'pip-services-sms:client:*:*:1.0',
         
         'message_templates.verify_phone.subject', 'Verify your sms',
         'message_templates.verify_phone.text', 'Your verification code is {{ code }}.',
@@ -59,7 +59,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
     private _templatesResolver: MessageTemplatesResolverV1 = new MessageTemplatesResolverV1();
     private _logger: CompositeLogger = new CompositeLogger();
     private _activitiesClient: IActivitiesClientV1;
-    private _smsClient: ISmsDeliveryClientV1;
+    private _smsClient: ISmsClientV1;
     private _persistence: ISmsSettingsPersistence;
     private _commandSet: SmsSettingsCommandSet;
 
@@ -85,7 +85,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
 
         this._persistence = this._dependencyResolver.getOneRequired<ISmsSettingsPersistence>('persistence');
         this._activitiesClient = this._dependencyResolver.getOneOptional<IActivitiesClientV1>('activities');
-        this._smsClient = this._dependencyResolver.getOneRequired<ISmsDeliveryClientV1>('smsdelivery');
+        this._smsClient = this._dependencyResolver.getOneRequired<ISmsClientV1>('smsdelivery');
     }
 
     public getCommandSet(): CommandSet {

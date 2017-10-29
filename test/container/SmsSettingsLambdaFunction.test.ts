@@ -7,7 +7,7 @@ import { ConfigParams } from 'pip-services-commons-node';
 import { References } from 'pip-services-commons-node';
 import { ConsoleLogger } from 'pip-services-commons-node';
 
-import { SmsDeliveryNullClientV1 } from 'pip-clients-smsdelivery-node';
+import { SmsNullClientV1 } from 'pip-clients-sms-node';
 
 import { SmsSettingsV1 } from '../../src/data/version1/SmsSettingsV1';
 import { SmsSettingsMemoryPersistence } from '../../src/persistence/SmsSettingsMemoryPersistence';
@@ -30,7 +30,7 @@ suite('SmsSettingsLambdaFunction', ()=> {
             'logger.descriptor', 'pip-services-commons:logger:console:default:1.0',
             'persistence.descriptor', 'pip-services-smssettings:persistence:memory:default:1.0',
             'controller.descriptor', 'pip-services-smssettings:controller:default:default:1.0',
-            'smsdelivery.descriptor', 'pip-services-smsdelivery:client:null:default:1.0'
+            'smsdelivery.descriptor', 'pip-services-sms:client:null:default:1.0'
         );
 
         lambda = new SmsSettingsLambdaFunction();

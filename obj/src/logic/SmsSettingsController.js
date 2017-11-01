@@ -41,7 +41,7 @@ class SmsSettingsController {
         this._logger.setReferences(references);
         this._persistence = this._dependencyResolver.getOneRequired('persistence');
         this._activitiesClient = this._dependencyResolver.getOneOptional('activities');
-        this._smsClient = this._dependencyResolver.getOneRequired('smsdelivery');
+        this._smsClient = this._dependencyResolver.getOneOptional('smsdelivery');
     }
     getCommandSet() {
         if (this._commandSet == null)
@@ -126,10 +126,12 @@ class SmsSettingsController {
                 language: newSettings.language
             };
             let parameters = pip_services_commons_node_1.ConfigParams.fromTuples('code', newSettings.ver_code);
-            this._smsClient.sendMessageToRecipient(correlationId, recipient, message, parameters, (err) => {
-                if (err)
-                    this._logger.error(correlationId, err, 'Failed to send phone verification message');
-            });
+            if (this._smsClient) {
+                this._smsClient.sendMessageToRecipient(correlationId, recipient, message, parameters, (err) => {
+                    if (err)
+                        this._logger.error(correlationId, err, 'Failed to send phone verification message');
+                });
+            }
         });
     }
     setSettings(correlationId, settings, callback) {

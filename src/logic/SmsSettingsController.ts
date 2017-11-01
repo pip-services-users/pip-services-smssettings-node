@@ -85,7 +85,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
 
         this._persistence = this._dependencyResolver.getOneRequired<ISmsSettingsPersistence>('persistence');
         this._activitiesClient = this._dependencyResolver.getOneOptional<IActivitiesClientV1>('activities');
-        this._smsClient = this._dependencyResolver.getOneRequired<ISmsClientV1>('smsdelivery');
+        this._smsClient = this._dependencyResolver.getOneOptional<ISmsClientV1>('smsdelivery');
     }
 
     public getCommandSet(): CommandSet {
@@ -196,10 +196,12 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 'code', newSettings.ver_code
             );
 
-            this._smsClient.sendMessageToRecipient(correlationId, recipient, message, parameters, (err) => {
-                if (err)
-                    this._logger.error(correlationId, err, 'Failed to send phone verification message');
-            });
+            if (this._smsClient) {
+                this._smsClient.sendMessageToRecipient(correlationId, recipient, message, parameters, (err) => {
+                    if (err)
+                        this._logger.error(correlationId, err, 'Failed to send phone verification message');
+                });
+            }
         });
     }
     

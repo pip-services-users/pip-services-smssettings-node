@@ -40,8 +40,8 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         'dependencies.msgtemplates', 'pip-services-msgtemplates:client:*:*:1.0',
         'dependencies.smsdelivery', 'pip-services-sms:client:*:*:1.0',
         
-        'message_templates.verify_phone.subject', 'Verify your sms',
-        'message_templates.verify_phone.text', 'Your verification code is {{ code }}.',
+        'message_templates.verify_phone.subject', 'Verify phone number',
+        'message_templates.verify_phone.text', 'Verification code for {{phone}} is {{ code }}.',
 
         'options.magic_code', null,
         'options.signature_length', 100,

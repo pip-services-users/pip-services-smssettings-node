@@ -7,6 +7,7 @@ export declare class SmsSettingsCommandSet extends CommandSet {
     private makeGetSettingsByIdCommand();
     private makeGetSettingsBySmsSettingsCommand();
     private makeSetSettingsCommand();
+    private makeSetVerifiedSettingsCommand();
     private makeSetRecipientCommand();
     private makeSetSubscriptionsCommand();
     private makeDeleteSettingsByIdCommand();

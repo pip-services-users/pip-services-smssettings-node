@@ -179,6 +179,26 @@ class SmsSettingsController {
                 callback(err, newSettings);
         });
     }
+    setVerifiedSettings(correlationId, settings, callback) {
+        if (settings.id == null) {
+            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
+            return;
+        }
+        if (settings.phone == null) {
+            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_PHONE', 'Missing phone'), null);
+            return;
+        }
+        if (!SmsSettingsController._phoneRegex.test(settings.phone)) {
+            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + settings.phone).withDetails('phone', settings.phone), null);
+            return;
+        }
+        let newSettings = _.clone(settings);
+        newSettings.verified = true;
+        newSettings.ver_code = null;
+        newSettings.ver_expire_time = null;
+        newSettings.subscriptions = newSettings.subscriptions || {};
+        this._persistence.set(correlationId, newSettings, callback);
+    }
     setRecipient(correlationId, recipientId, name, phone, language, callback) {
         if (recipientId == null) {
             callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);

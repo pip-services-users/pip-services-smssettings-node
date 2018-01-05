@@ -31,6 +31,7 @@ export declare class SmsSettingsController implements IConfigurable, IReferencea
     private verifyAndSaveSettings(correlationId, oldSettings, newSettings, callback);
     private sendVerificationMessage(correlationId, newSettings);
     setSettings(correlationId: string, settings: SmsSettingsV1, callback: (err: any, settings: SmsSettingsV1) => void): void;
+    setVerifiedSettings(correlationId: string, settings: SmsSettingsV1, callback: (err: any, settings: SmsSettingsV1) => void): void;
     setRecipient(correlationId: string, recipientId: string, name: string, phone: string, language: string, callback?: (err: any, settings: SmsSettingsV1) => void): void;
     setSubscriptions(correlationId: string, recipientId: string, subscriptions: any, callback?: (err: any, settings: SmsSettingsV1) => void): void;
     deleteSettingsById(correlationId: string, recipientId: string, callback?: (err: any) => void): void;

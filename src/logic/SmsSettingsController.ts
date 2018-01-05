@@ -267,6 +267,38 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
     }
 
 
+    public setVerifiedSettings(correlationId: string, settings: SmsSettingsV1,
+        callback: (err: any, settings: SmsSettingsV1) => void): void {
+        if (settings.id == null) {
+            callback(new BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
+            return;
+        }
+        if (settings.phone == null) {
+            callback(new BadRequestException(correlationId, 'NO_PHONE', 'Missing phone'), null);
+            return;
+        }
+        if (!SmsSettingsController._phoneRegex.test(settings.phone)) {
+            callback(
+                new BadRequestException(
+                    correlationId, 
+                    'WRONG_PHONE', 
+                    'Invalid phone ' + settings.phone
+                ).withDetails('phone', settings.phone),
+                null
+            );
+            return;
+        }
+    
+        let newSettings: SmsSettingsV1 = _.clone(settings);
+        newSettings.verified = true;
+        newSettings.ver_code = null;
+        newSettings.ver_expire_time = null;
+        newSettings.subscriptions = newSettings.subscriptions || {};
+
+        this._persistence.set(correlationId, newSettings, callback);
+    }
+    
+
     public setRecipient(correlationId: string, recipientId: string,
         name: string, phone: string, language: string,
         callback?: (err: any, settings: SmsSettingsV1) => void): void {

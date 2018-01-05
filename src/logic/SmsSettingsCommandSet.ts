@@ -25,6 +25,7 @@ export class SmsSettingsCommandSet extends CommandSet {
 		this.addCommand(this.makeGetSettingsByIdCommand());
 		this.addCommand(this.makeGetSettingsBySmsSettingsCommand());
 		this.addCommand(this.makeSetSettingsCommand());
+		this.addCommand(this.makeSetVerifiedSettingsCommand());
 		this.addCommand(this.makeSetRecipientCommand());
 		this.addCommand(this.makeSetSubscriptionsCommand());
 		this.addCommand(this.makeDeleteSettingsByIdCommand());
@@ -76,6 +77,18 @@ export class SmsSettingsCommandSet extends CommandSet {
             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
                 let settings = args.get("settings");
                 this._logic.setSettings(correlationId, settings, callback);
+            }
+		);
+	}
+
+	private makeSetVerifiedSettingsCommand(): ICommand {
+		return new Command(
+			"set_verified_settings",
+			new ObjectSchema(true)
+				.withRequiredProperty('settings', new SmsSettingsV1Schema()),
+            (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
+                let settings = args.get("settings");
+                this._logic.setVerifiedSettings(correlationId, settings, callback);
             }
 		);
 	}

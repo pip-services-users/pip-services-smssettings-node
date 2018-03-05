@@ -175,6 +175,8 @@ class SmsSettingsController {
                 });
             },
         ], (err) => {
+            // remove ver_code from returned data
+            delete newSettings.ver_code;
             if (callback)
                 callback(err, newSettings);
         });
@@ -247,6 +249,8 @@ class SmsSettingsController {
                 });
             },
         ], (err) => {
+            // remove ver_code from returned data
+            delete newSettings.ver_code;
             if (callback)
                 callback(err, newSettings);
         });
@@ -294,6 +298,8 @@ class SmsSettingsController {
                 });
             },
         ], (err) => {
+            // remove ver_code from returned data
+            delete newSettings.ver_code;
             if (callback)
                 callback(err, newSettings);
         });

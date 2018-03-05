@@ -39,7 +39,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         'dependencies.activities', 'pip-services-activities:client:*:*:1.0',
         'dependencies.msgtemplates', 'pip-services-msgtemplates:client:*:*:1.0',
         'dependencies.smsdelivery', 'pip-services-sms:client:*:*:1.0',
-        
+
         'message_templates.verify_phone.subject', 'Verify phone number',
         'message_templates.verify_phone.text', 'Verification code for {{phone}} is {{ code }}.',
 
@@ -74,7 +74,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         this._verifyOnUpdate = config.getAsBooleanWithDefault('options.verify_on_update', this._verifyOnUpdate);
         this._expireTimeout = config.getAsIntegerWithDefault('options.verify_expire_timeout', this._expireTimeout);
         this._magicCode = config.getAsStringWithDefault('options.magic_code', this._magicCode);
-        
+
         this._config = config;
     }
 
@@ -93,14 +93,14 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             this._commandSet = new SmsSettingsCommandSet(this);
         return this._commandSet;
     }
-    
+
     private settingsToPublic(settings: SmsSettingsV1): SmsSettingsV1 {
         if (settings == null) return null;
         delete settings.ver_code;
         delete settings.ver_expire_time;
         return settings;
     }
-    
+
     public getSettingsByIds(correlationId: string, recipientIds: string[],
         callback: (err: any, settings: SmsSettingsV1[]) => void): void {
         this._persistence.getListByIds(correlationId, recipientIds, (err, settings) => {
@@ -111,7 +111,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             callback(err, settings);
         });
     }
-    
+
     public getSettingsById(correlationId: string, recipientId: string,
         callback: (err: any, settings: SmsSettingsV1) => void): void {
         this._persistence.getOneById(correlationId, recipientId, (err, settings) => {
@@ -168,7 +168,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         this._templatesResolver.resolve('verify_phone', (err, template) => {
             if (err == null && template == null) {
                 err = new ConfigException(
-                    correlationId, 
+                    correlationId,
                     'MISSING_VERIFY_PHONE',
                     'Message template "verify_phone" is missing'
                 );
@@ -179,13 +179,13 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 return;
             }
 
-            let message = <SmsMessageV1> {
+            let message = <SmsMessageV1>{
                 subject: template.subject,
                 text: template.text,
                 html: template.html
             };
 
-            let recipient = <SmsRecipientV1> {
+            let recipient = <SmsRecipientV1>{
                 id: newSettings.id,
                 name: newSettings.name,
                 phone: newSettings.phone,
@@ -204,7 +204,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             }
         });
     }
-    
+
     public setSettings(correlationId: string, settings: SmsSettingsV1,
         callback: (err: any, settings: SmsSettingsV1) => void): void {
         if (settings.id == null) {
@@ -218,15 +218,15 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         if (!SmsSettingsController._phoneRegex.test(settings.phone)) {
             callback(
                 new BadRequestException(
-                    correlationId, 
-                    'WRONG_PHONE', 
+                    correlationId,
+                    'WRONG_PHONE',
                     'Invalid phone ' + settings.phone
                 ).withDetails('phone', settings.phone),
                 null
             );
             return;
         }
-    
+
         let newSettings: SmsSettingsV1 = _.clone(settings);
         newSettings.verified = false;
         newSettings.ver_code = null;
@@ -262,6 +262,9 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 })
             },
         ], (err) => {
+            // remove ver_code from returned data
+            delete newSettings.ver_code;
+
             if (callback) callback(err, newSettings);
         });
     }
@@ -280,15 +283,15 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         if (!SmsSettingsController._phoneRegex.test(settings.phone)) {
             callback(
                 new BadRequestException(
-                    correlationId, 
-                    'WRONG_PHONE', 
+                    correlationId,
+                    'WRONG_PHONE',
                     'Invalid phone ' + settings.phone
                 ).withDetails('phone', settings.phone),
                 null
             );
             return;
         }
-    
+
         let newSettings: SmsSettingsV1 = _.clone(settings);
         newSettings.verified = true;
         newSettings.ver_code = null;
@@ -297,7 +300,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
 
         this._persistence.set(correlationId, newSettings, callback);
     }
-    
+
 
     public setRecipient(correlationId: string, recipientId: string,
         name: string, phone: string, language: string,
@@ -310,15 +313,15 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
         if (phone != null && !SmsSettingsController._phoneRegex.test(phone)) {
             callback(
                 new BadRequestException(
-                    correlationId, 
-                    'WRONG_PHONE', 
+                    correlationId,
+                    'WRONG_PHONE',
                     'Invalid phone ' + phone
                 ).withDetails('phone', phone),
                 null
             );
             return;
         }
-    
+
         let oldSettings: SmsSettingsV1;
         let newSettings: SmsSettingsV1;
 
@@ -344,7 +347,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                         } else {
                             // Create new settings if they are not exist
                             oldSettings = null;
-                            newSettings = <SmsSettingsV1> {
+                            newSettings = <SmsSettingsV1>{
                                 id: recipientId,
                                 name: name,
                                 phone: phone,
@@ -364,6 +367,9 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 })
             },
         ], (err) => {
+            // remove ver_code from returned data
+            delete newSettings.ver_code;
+
             if (callback) callback(err, newSettings);
         });
     }
@@ -375,7 +381,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             callback(new BadRequestException(correlationId, 'NO_ID', 'Missing id'), null);
             return;
         }
-    
+
         let oldSettings: SmsSettingsV1;
         let newSettings: SmsSettingsV1;
 
@@ -399,7 +405,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                         } else {
                             // Create new settings if they are not exist
                             oldSettings = null;
-                            newSettings = <SmsSettingsV1> {
+                            newSettings = <SmsSettingsV1>{
                                 id: recipientId,
                                 name: null,
                                 phone: null,
@@ -420,6 +426,9 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 })
             },
         ], (err) => {
+            // remove ver_code from returned data
+            delete newSettings.ver_code;
+
             if (callback) callback(err, newSettings);
         });
     }
@@ -438,7 +447,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             callback(new BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'));
             return;
         }
-    
+
         let settings: SmsSettingsV1;
 
         async.series([
@@ -447,14 +456,14 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 this._persistence.getOneById(correlationId, recipientId, (err, data) => {
                     if (err == null && data == null) {
                         err = new NotFoundException(
-                            correlationId, 
-                            'RECIPIENT_NOT_FOUND', 
+                            correlationId,
+                            'RECIPIENT_NOT_FOUND',
                             'Recipient ' + recipientId + ' was not found'
                         )
-                        .withDetails('recipient_id', recipientId);
+                            .withDetails('recipient_id', recipientId);
                     }
                     settings = data;
-                    callback(err); 
+                    callback(err);
                 });
             },
             // Check if verification is needed
@@ -498,12 +507,12 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                 ),
                 (err, activity) => {
                     if (err)
-                       this._logger.error(correlationId, err, 'Failed to log user activity');
+                        this._logger.error(correlationId, err, 'Failed to log user activity');
                 }
             );
         }
     }
-    
+
     public verifyPhone(correlationId: string, recipientId: string, code: string,
         callback?: (err: any) => void): void {
         let settings: SmsSettingsV1;
@@ -513,7 +522,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             (callback) => {
                 this._persistence.getOneById(
                     correlationId,
-                    recipientId, 
+                    recipientId,
                     (err, data) => {
                         settings = data;
 
@@ -523,7 +532,7 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                                 'RECIPIENT_NOT_FOUND',
                                 'Recipient ' + recipientId + ' was not found'
                             )
-                            .withDetails('recipient_id', recipientId);
+                                .withDetails('recipient_id', recipientId);
                         }
 
                         callback(err);
@@ -543,8 +552,8 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                             'INVALID_CODE',
                             'Invalid sms verification code ' + code
                         )
-                        .withDetails('recipient_id', recipientId)
-                        .withDetails('code', code)
+                            .withDetails('recipient_id', recipientId)
+                            .withDetails('code', code)
                     );
                     return;
                 }

@@ -140,7 +140,8 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
                     || (oldSettings.phone != newSettings.phone && this._verifyOnUpdate);
                 if (verify) {
                     newSettings.verified = false;
-                    newSettings.ver_code = IdGenerator.nextShort().substr(-4, 4)
+                    let code = IdGenerator.nextShort();
+                    newSettings.ver_code = code.substr(-4, 4);
                     newSettings.ver_expire_time = new Date(new Date().getTime() + this._expireTimeout * 60000);
                 }
                 callback();
@@ -469,7 +470,8 @@ export class SmsSettingsController implements IConfigurable, IReferenceable, ICo
             // Check if verification is needed
             (callback) => {
                 settings.verified = false;
-                settings.ver_code = IdGenerator.nextShort();
+                let code = IdGenerator.nextShort();
+                settings.ver_code = code.substr(-4, 4);
                 settings.ver_expire_time = new Date(new Date().getTime() + this._expireTimeout * 60000);
 
                 callback();

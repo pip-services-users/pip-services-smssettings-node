@@ -82,7 +82,8 @@ class SmsSettingsController {
                     || (oldSettings.phone != newSettings.phone && this._verifyOnUpdate);
                 if (verify) {
                     newSettings.verified = false;
-                    newSettings.ver_code = pip_services_commons_node_6.IdGenerator.nextShort().substr(-4, 4);
+                    let code = pip_services_commons_node_6.IdGenerator.nextShort();
+                    newSettings.ver_code = code.substr(-4, 4);
                     newSettings.ver_expire_time = new Date(new Date().getTime() + this._expireTimeout * 60000);
                 }
                 callback();
@@ -331,7 +332,8 @@ class SmsSettingsController {
             // Check if verification is needed
             (callback) => {
                 settings.verified = false;
-                settings.ver_code = pip_services_commons_node_6.IdGenerator.nextShort();
+                let code = pip_services_commons_node_6.IdGenerator.nextShort();
+                settings.ver_code = code.substr(-4, 4);
                 settings.ver_expire_time = new Date(new Date().getTime() + this._expireTimeout * 60000);
                 callback();
             },

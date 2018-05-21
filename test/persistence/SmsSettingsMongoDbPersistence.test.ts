@@ -1,3 +1,5 @@
+let process = require('process');
+
 import { ConfigParams } from 'pip-services-commons-node';
 
 import { SmsSettingsMongoDbPersistence } from '../../src/persistence/SmsSettingsMongoDbPersistence';
@@ -7,22 +9,19 @@ suite('SmsSettingsMongoDbPersistence', ()=> {
     let persistence: SmsSettingsMongoDbPersistence;
     let fixture: SmsSettingsPersistenceFixture;
 
-    let mongoUri = process.env['MONGO_URI'];
-    var mongoCollection = process.env["MONGO_COLLECTION"] || "sms_settings";
-    let mongoHost = process.env['MONGO_HOST'] || 'localhost';
-    let mongoPort = process.env['MONGO_PORT'] || 27017;
-    let mongoDatabase = process.env['MONGO_DB'] || 'test';
-
-    if (mongoUri == null && mongoHost == null)
-        return;
-    
     setup((done) => {
-        let dbConfig = ConfigParams.fromTuples(
-            "collection", mongoCollection,
-            'connection.uri', mongoUri,
-            'connection.host', mongoHost,
-            'connection.port', mongoPort,
-            'connection.database', mongoDatabase
+        var MONGO_DB = process.env["MONGO_DB"] || "test";
+        var MONGO_COLLECTION = process.env["MONGO_COLLECTION"] || "sms_settings";
+        var MONGO_SERVICE_HOST = process.env["MONGO_SERVICE_HOST"] || "localhost";
+        var MONGO_SERVICE_PORT = process.env["MONGO_SERVICE_PORT"] || "27017";
+        var MONGO_SERVICE_URI = process.env["MONGO_SERVICE_URI"];
+
+        var dbConfig = ConfigParams.fromTuples(
+            "collection", MONGO_COLLECTION,
+            "connection.database", MONGO_DB,
+            "connection.host", MONGO_SERVICE_HOST,
+            "connection.port", MONGO_SERVICE_PORT,
+            "connection.uri", MONGO_SERVICE_URI
         );
 
         persistence = new SmsSettingsMongoDbPersistence();

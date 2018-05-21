@@ -8,6 +8,7 @@ suite('SmsSettingsMongoDbPersistence', ()=> {
     let fixture: SmsSettingsPersistenceFixture;
 
     let mongoUri = process.env['MONGO_URI'];
+    var mongoCollection = process.env["MONGO_COLLECTION"] || "sms_settings";
     let mongoHost = process.env['MONGO_HOST'] || 'localhost';
     let mongoPort = process.env['MONGO_PORT'] || 27017;
     let mongoDatabase = process.env['MONGO_DB'] || 'test';
@@ -17,6 +18,7 @@ suite('SmsSettingsMongoDbPersistence', ()=> {
     
     setup((done) => {
         let dbConfig = ConfigParams.fromTuples(
+            "collection", mongoCollection,
             'connection.uri', mongoUri,
             'connection.host', mongoHost,
             'connection.port', mongoPort,

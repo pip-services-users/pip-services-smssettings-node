@@ -69,7 +69,7 @@ suite('SmsSettingsHttpServiceV1', ()=> {
         async.series([
         // Create sms settings
             (callback) => {
-                rest.post('/sms_settings/set_settings',
+                rest.post('/v1/sms_settings/set_settings',
                     {
                         settings: SETTINGS
                     },
@@ -91,7 +91,7 @@ suite('SmsSettingsHttpServiceV1', ()=> {
             (callback) => {
                 settings1.subscriptions.engagement = true;
 
-                rest.post('/sms_settings/set_settings',
+                rest.post('/v1/sms_settings/set_settings',
                     { 
                         settings: settings1 
                     },
@@ -108,7 +108,7 @@ suite('SmsSettingsHttpServiceV1', ()=> {
             },
         // Delete settings
             (callback) => {
-                rest.post('/sms_settings/delete_settings_by_id',
+                rest.post('/v1/sms_settings/delete_settings_by_id',
                     {
                         recipient_id: settings1.id
                     },
@@ -121,7 +121,7 @@ suite('SmsSettingsHttpServiceV1', ()=> {
             },
         // Try to get deleted settings
             (callback) => {
-                rest.post('/sms_settings/get_settings_by_id',
+                rest.post('/v1/sms_settings/get_settings_by_id',
                     {
                         recipient_id: settings1.id
                     },

@@ -43,6 +43,7 @@
         "pip-services-data-node": "^2.0.0",
         "pip-services-net-node": "^2.0.0",
         "pip-services-aws-node": "^1.0.0",
+        "pip-services-oss-node": "^1.0.0",
         "pip-clients-activities-node": "git+ssh://git@github.com:pip-services-users/pip-clients-activities-node.git",
         "pip-clients-users-node": "git+ssh://git@github.com:pip-services-users/pip-clients-users-node.git",
         "pip-clients-msgtemplates-node": "git+ssh://git@github.com:pip-services-content/pip-clients-msgtemplates-node.git",

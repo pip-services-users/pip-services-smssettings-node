@@ -66,9 +66,9 @@
 # Default controller
 - descriptor: "pip-services-smssettings:controller:default:default:1.0"
   options:
-    magic_code: {{SMSSETTINGS_MAGIC_CODE}}{{#unless SMSSETTINGS_MAGIC_CODE}}'123'{{/unless}}
-    verify_on_create: {{SMSSETTINGS_VERIFY_ON_CREATE}}{{#unless SMSSETTINGS_VERIFY_ON_CREATE}}true{{/unless}}
-    verify_on_update: {{SMSSETTINGS_VERIFY_ON_UPDATE}}{{#unless SMSSETTINGS_VERIFY_ON_UPDATE}}true{{/unless}}
+    magic_code: {{MAGIC_CODE}}{{#unless MAGIC_CODE}}'123'{{/unless}}
+    verify_on_create: {{VERIFY_ON_CREATE}}{{#unless VERIFY_ON_CREATE}}true{{/unless}}
+    verify_on_update: {{VERIFY_ON_UPDATE}}{{#unless VERIFY_ON_UPDATE}}true{{/unless}}
 
 # Common HTTP endpoint
 - descriptor: "pip-services:endpoint:http:default:1.0"
@@ -88,7 +88,21 @@
 
 # Prometheus metrics service
 - descriptor: "pip-services:metrics-service:prometheus:default:1.0"
+
+# SMS components
+{{#if INFRASTRUCTURE_SERVICE_HOST}}
+- descriptor: "pip-services-sms:client:http:default:1.0"
   connection:
     protocol: "http"
-    host: "0.0.0.0"
-    port: 8082
+    host: "{{{INFRASTRUCTURE_SERVICE_HOST}}}"
+    port: {{INFRASTRUCTURE_SERVICE_PORT}}
+{{/if}}
+
+# Message templates components
+{{#if CONTENT_SERVICE_HOST}}
+- descriptor: "pip-services-msgtemplates:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{CONTENT_SERVICE_HOST}}}"
+    port: {{CONTENT_SERVICE_PORT}}
+{{/if}}

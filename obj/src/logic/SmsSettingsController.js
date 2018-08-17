@@ -8,7 +8,7 @@ const pip_services_commons_node_3 = require("pip-services-commons-node");
 const pip_services_commons_node_4 = require("pip-services-commons-node");
 const pip_services_commons_node_5 = require("pip-services-commons-node");
 const pip_services_commons_node_6 = require("pip-services-commons-node");
-const pip_services_commons_node_7 = require("pip-services-commons-node");
+const pip_services_components_node_1 = require("pip-services-components-node");
 const pip_clients_activities_node_1 = require("pip-clients-activities-node");
 const pip_clients_msgtemplates_node_1 = require("pip-clients-msgtemplates-node");
 const SmsSettingsActivityTypeV1_1 = require("../data/version1/SmsSettingsActivityTypeV1");
@@ -22,7 +22,7 @@ class SmsSettingsController {
         this._config = new pip_services_commons_node_1.ConfigParams();
         this._dependencyResolver = new pip_services_commons_node_2.DependencyResolver(SmsSettingsController._defaultConfig);
         this._templatesResolver = new pip_clients_msgtemplates_node_1.MessageTemplatesResolverV1();
-        this._logger = new pip_services_commons_node_7.CompositeLogger();
+        this._logger = new pip_services_components_node_1.CompositeLogger();
     }
     configure(config) {
         config = config.setDefaults(SmsSettingsController._defaultConfig);

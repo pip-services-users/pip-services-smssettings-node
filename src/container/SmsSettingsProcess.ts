@@ -1,7 +1,5 @@
 import { IReferences } from 'pip-services-commons-node';
 import { ProcessContainer } from 'pip-services-container-node';
-import { DefaultNetFactory } from 'pip-services-net-node';
-import { DefaultOssFactory } from 'pip-services-oss-node';
 
 import { ActivitiesClientFactory } from 'pip-clients-activities-node';
 import { MessageTemplatesClientFactory } from 'pip-clients-msgtemplates-node';
@@ -17,8 +15,6 @@ export class SmsSettingsProcess extends ProcessContainer {
         this._factories.add(new ActivitiesClientFactory());
         this._factories.add(new MessageTemplatesClientFactory());
         this._factories.add(new SmsClientFactory());
-        this._factories.add(new DefaultNetFactory);
-        this._factories.add(new DefaultOssFactory);
     }
 
 }

@@ -17,7 +17,7 @@ import { ConfigException } from 'pip-services-commons-node';
 import { NotFoundException } from 'pip-services-commons-node';
 import { IOpenable } from 'pip-services-commons-node';
 import { IdGenerator } from 'pip-services-commons-node';
-import { CompositeLogger } from 'pip-services-commons-node';
+import { CompositeLogger } from 'pip-services-components-node';
 
 import { PartyActivityV1 } from 'pip-clients-activities-node';
 import { IActivitiesClientV1 } from 'pip-clients-activities-node';

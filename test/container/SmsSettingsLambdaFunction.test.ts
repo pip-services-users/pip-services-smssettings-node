@@ -5,7 +5,7 @@ let assert = require('chai').assert;
 import { Descriptor } from 'pip-services-commons-node';
 import { ConfigParams } from 'pip-services-commons-node';
 import { References } from 'pip-services-commons-node';
-import { ConsoleLogger } from 'pip-services-commons-node';
+import { ConsoleLogger } from 'pip-services-components-node';
 
 import { SmsNullClientV1 } from 'pip-clients-sms-node';
 
@@ -27,7 +27,7 @@ suite('SmsSettingsLambdaFunction', ()=> {
 
     suiteSetup((done) => {
         let config = ConfigParams.fromTuples(
-            'logger.descriptor', 'pip-services-commons:logger:console:default:1.0',
+            'logger.descriptor', 'pip-services:logger:console:default:1.0',
             'persistence.descriptor', 'pip-services-smssettings:persistence:memory:default:1.0',
             'controller.descriptor', 'pip-services-smssettings:controller:default:default:1.0',
             'smsdelivery.descriptor', 'pip-services-sms:client:null:default:1.0'

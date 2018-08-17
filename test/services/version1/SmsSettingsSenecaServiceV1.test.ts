@@ -5,8 +5,8 @@ let assert = require('chai').assert;
 import { Descriptor } from 'pip-services-commons-node';
 import { ConfigParams } from 'pip-services-commons-node';
 import { References } from 'pip-services-commons-node';
-import { ConsoleLogger } from 'pip-services-commons-node';
-import { SenecaInstance } from 'pip-services-net-node';
+import { ConsoleLogger } from 'pip-services-components-node';
+import { SenecaInstance } from 'pip-services-seneca-node';
 
 import { SmsNullClientV1 } from 'pip-clients-sms-node';
 
@@ -44,8 +44,8 @@ suite('SmsSettingsSenecaServiceV1', ()=> {
         let senecaAddon = new SenecaInstance();
 
         let references: References = References.fromTuples(
-            new Descriptor('pip-services-commons', 'logger', 'console', 'default', '1.0'), logger,
-            new Descriptor('pip-services-net', 'seneca', 'instance', 'default', '1.0'), senecaAddon,
+            new Descriptor('pip-services', 'logger', 'console', 'default', '1.0'), logger,
+            new Descriptor('pip-services-seneca', 'seneca', 'instance', 'default', '1.0'), senecaAddon,
             new Descriptor('pip-services-smssettings', 'persistence', 'memory', 'default', '1.0'), persistence,
             new Descriptor('pip-services-smssettings', 'controller', 'default', 'default', '1.0'), controller,
             new Descriptor('pip-services-sms', 'client', 'null', 'default', '1.0'), new SmsNullClientV1(),

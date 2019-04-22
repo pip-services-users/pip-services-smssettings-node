@@ -1,4 +1,4 @@
-import { IdentifiableMemoryPersistence } from 'pip-services-data-node';
+import { IdentifiableMemoryPersistence } from 'pip-services3-data-node';
 import { SmsSettingsV1 } from '../data/version1/SmsSettingsV1';
 import { ISmsSettingsPersistence } from './ISmsSettingsPersistence';
 export declare class SmsSettingsMemoryPersistence extends IdentifiableMemoryPersistence<SmsSettingsV1, string> implements ISmsSettingsPersistence {

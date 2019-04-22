@@ -1,4 +1,4 @@
-import { ConfigParams } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
 
 import { SmsSettingsFilePersistence } from '../../src/persistence/SmsSettingsFilePersistence';
 import { SmsSettingsPersistenceFixture } from './SmsSettingsPersistenceFixture';

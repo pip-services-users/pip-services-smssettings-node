@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
 let async = require('async');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_commons_node_3 = require("pip-services-commons-node");
-const pip_services_commons_node_4 = require("pip-services-commons-node");
-const pip_services_commons_node_5 = require("pip-services-commons-node");
-const pip_services_commons_node_6 = require("pip-services-commons-node");
-const pip_services_components_node_1 = require("pip-services-components-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_commons_node_3 = require("pip-services3-commons-node");
+const pip_services3_commons_node_4 = require("pip-services3-commons-node");
+const pip_services3_commons_node_5 = require("pip-services3-commons-node");
+const pip_services3_commons_node_6 = require("pip-services3-commons-node");
+const pip_services3_components_node_1 = require("pip-services3-components-node");
 const pip_clients_activities_node_1 = require("pip-clients-activities-node");
 const pip_clients_msgtemplates_node_1 = require("pip-clients-msgtemplates-node");
 const SmsSettingsActivityTypeV1_1 = require("../data/version1/SmsSettingsActivityTypeV1");
@@ -19,10 +19,10 @@ class SmsSettingsController {
         this._verifyOnUpdate = true;
         this._expireTimeout = 24 * 60; // in minutes
         this._magicCode = null;
-        this._config = new pip_services_commons_node_1.ConfigParams();
-        this._dependencyResolver = new pip_services_commons_node_2.DependencyResolver(SmsSettingsController._defaultConfig);
+        this._config = new pip_services3_commons_node_1.ConfigParams();
+        this._dependencyResolver = new pip_services3_commons_node_2.DependencyResolver(SmsSettingsController._defaultConfig);
         this._templatesResolver = new pip_clients_msgtemplates_node_1.MessageTemplatesResolverV1();
-        this._logger = new pip_services_components_node_1.CompositeLogger();
+        this._logger = new pip_services3_components_node_1.CompositeLogger();
     }
     configure(config) {
         config = config.setDefaults(SmsSettingsController._defaultConfig);
@@ -82,7 +82,7 @@ class SmsSettingsController {
                     || (oldSettings.phone != newSettings.phone && this._verifyOnUpdate);
                 if (verify) {
                     newSettings.verified = false;
-                    let code = pip_services_commons_node_6.IdGenerator.nextShort();
+                    let code = pip_services3_commons_node_6.IdGenerator.nextShort();
                     newSettings.ver_code = code.substr(-4, 4);
                     newSettings.ver_expire_time = new Date(new Date().getTime() + this._expireTimeout * 60000);
                 }
@@ -109,7 +109,7 @@ class SmsSettingsController {
     sendVerificationMessage(correlationId, newSettings) {
         this._templatesResolver.resolve('verify_phone', (err, template) => {
             if (err == null && template == null) {
-                err = new pip_services_commons_node_4.ConfigException(correlationId, 'MISSING_VERIFY_PHONE', 'Message template "verify_phone" is missing');
+                err = new pip_services3_commons_node_4.ConfigException(correlationId, 'MISSING_VERIFY_PHONE', 'Message template "verify_phone" is missing');
             }
             if (err) {
                 this._logger.error(correlationId, err, 'Cannot find verify_phone message template');
@@ -126,7 +126,7 @@ class SmsSettingsController {
                 phone: newSettings.phone,
                 language: newSettings.language
             };
-            let parameters = pip_services_commons_node_1.ConfigParams.fromTuples('code', newSettings.ver_code);
+            let parameters = pip_services3_commons_node_1.ConfigParams.fromTuples('code', newSettings.ver_code);
             if (this._smsClient) {
                 this._smsClient.sendMessageToRecipient(correlationId, recipient, message, parameters, (err) => {
                     if (err)
@@ -137,15 +137,15 @@ class SmsSettingsController {
     }
     setSettings(correlationId, settings, callback) {
         if (settings.id == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
             return;
         }
         if (settings.phone == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_PHONE', 'Missing phone'), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_PHONE', 'Missing phone'), null);
             return;
         }
         if (!SmsSettingsController._phoneRegex.test(settings.phone)) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + settings.phone).withDetails('phone', settings.phone), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + settings.phone).withDetails('phone', settings.phone), null);
             return;
         }
         let newSettings = _.clone(settings);
@@ -184,15 +184,15 @@ class SmsSettingsController {
     }
     setVerifiedSettings(correlationId, settings, callback) {
         if (settings.id == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
             return;
         }
         if (settings.phone == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_PHONE', 'Missing phone'), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_PHONE', 'Missing phone'), null);
             return;
         }
         if (!SmsSettingsController._phoneRegex.test(settings.phone)) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + settings.phone).withDetails('phone', settings.phone), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + settings.phone).withDetails('phone', settings.phone), null);
             return;
         }
         let newSettings = _.clone(settings);
@@ -204,11 +204,11 @@ class SmsSettingsController {
     }
     setRecipient(correlationId, recipientId, name, phone, language, callback) {
         if (recipientId == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'), null);
             return;
         }
         if (phone != null && !SmsSettingsController._phoneRegex.test(phone)) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + phone).withDetails('phone', phone), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'WRONG_PHONE', 'Invalid phone ' + phone).withDetails('phone', phone), null);
             return;
         }
         let oldSettings;
@@ -258,7 +258,7 @@ class SmsSettingsController {
     }
     setSubscriptions(correlationId, recipientId, subscriptions, callback) {
         if (recipientId == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_ID', 'Missing id'), null);
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_ID', 'Missing id'), null);
             return;
         }
         let oldSettings;
@@ -313,7 +313,7 @@ class SmsSettingsController {
     }
     resendVerification(correlationId, recipientId, callback) {
         if (recipientId == null) {
-            callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'));
+            callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'NO_RECIPIENT_ID', 'Missing recipient id'));
             return;
         }
         let settings;
@@ -322,7 +322,7 @@ class SmsSettingsController {
             (callback) => {
                 this._persistence.getOneById(correlationId, recipientId, (err, data) => {
                     if (err == null && data == null) {
-                        err = new pip_services_commons_node_5.NotFoundException(correlationId, 'RECIPIENT_NOT_FOUND', 'Recipient ' + recipientId + ' was not found')
+                        err = new pip_services3_commons_node_5.NotFoundException(correlationId, 'RECIPIENT_NOT_FOUND', 'Recipient ' + recipientId + ' was not found')
                             .withDetails('recipient_id', recipientId);
                     }
                     settings = data;
@@ -332,7 +332,7 @@ class SmsSettingsController {
             // Check if verification is needed
             (callback) => {
                 settings.verified = false;
-                let code = pip_services_commons_node_6.IdGenerator.nextShort();
+                let code = pip_services3_commons_node_6.IdGenerator.nextShort();
                 settings.ver_code = code.substr(-4, 4);
                 settings.ver_expire_time = new Date(new Date().getTime() + this._expireTimeout * 60000);
                 callback();
@@ -375,7 +375,7 @@ class SmsSettingsController {
                 this._persistence.getOneById(correlationId, recipientId, (err, data) => {
                     settings = data;
                     if (settings == null && err == null) {
-                        err = new pip_services_commons_node_5.NotFoundException(correlationId, 'RECIPIENT_NOT_FOUND', 'Recipient ' + recipientId + ' was not found')
+                        err = new pip_services3_commons_node_5.NotFoundException(correlationId, 'RECIPIENT_NOT_FOUND', 'Recipient ' + recipientId + ' was not found')
                             .withDetails('recipient_id', recipientId);
                     }
                     callback(err);
@@ -387,7 +387,7 @@ class SmsSettingsController {
                 verified = verified || (this._magicCode != null && code == this._magicCode);
                 verified = verified && new Date().getTime() < settings.ver_expire_time.getTime();
                 if (!verified) {
-                    callback(new pip_services_commons_node_3.BadRequestException(correlationId, 'INVALID_CODE', 'Invalid sms verification code ' + code)
+                    callback(new pip_services3_commons_node_3.BadRequestException(correlationId, 'INVALID_CODE', 'Invalid sms verification code ' + code)
                         .withDetails('recipient_id', recipientId)
                         .withDetails('code', code));
                     return;
@@ -413,6 +413,6 @@ class SmsSettingsController {
     }
 }
 SmsSettingsController._phoneRegex = /^\+[0-9]{10,15}$/;
-SmsSettingsController._defaultConfig = pip_services_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-smssettings:persistence:*:*:1.0', 'dependencies.activities', 'pip-services-activities:client:*:*:1.0', 'dependencies.msgtemplates', 'pip-services-msgtemplates:client:*:*:1.0', 'dependencies.smsdelivery', 'pip-services-sms:client:*:*:1.0', 'message_templates.verify_phone.subject', 'Verify phone number', 'message_templates.verify_phone.text', 'Verification code for {{phone}} is {{ code }}.', 'options.magic_code', null, 'options.signature_length', 100, 'options.verify_on_create', true, 'options.verify_on_update', true);
+SmsSettingsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-smssettings:persistence:*:*:1.0', 'dependencies.activities', 'pip-services-activities:client:*:*:1.0', 'dependencies.msgtemplates', 'pip-services-msgtemplates:client:*:*:1.0', 'dependencies.smsdelivery', 'pip-services-sms:client:*:*:1.0', 'message_templates.verify_phone.subject', 'Verify phone number', 'message_templates.verify_phone.text', 'Verification code for {{phone}} is {{ code }}.', 'options.magic_code', null, 'options.signature_length', 100, 'options.verify_on_create', true, 'options.verify_on_update', true);
 exports.SmsSettingsController = SmsSettingsController;
 //# sourceMappingURL=SmsSettingsController.js.map

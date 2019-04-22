@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
-const pip_services_data_node_1 = require("pip-services-data-node");
-class SmsSettingsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemoryPersistence {
+const pip_services3_data_node_1 = require("pip-services3-data-node");
+class SmsSettingsMemoryPersistence extends pip_services3_data_node_1.IdentifiableMemoryPersistence {
     constructor() {
         super();
     }

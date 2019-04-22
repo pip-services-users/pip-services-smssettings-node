@@ -1,9 +1,9 @@
-import { ConfigParams } from 'pip-services-commons-node';
-import { IConfigurable } from 'pip-services-commons-node';
-import { IReferences } from 'pip-services-commons-node';
-import { IReferenceable } from 'pip-services-commons-node';
-import { ICommandable } from 'pip-services-commons-node';
-import { CommandSet } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { IConfigurable } from 'pip-services3-commons-node';
+import { IReferences } from 'pip-services3-commons-node';
+import { IReferenceable } from 'pip-services3-commons-node';
+import { ICommandable } from 'pip-services3-commons-node';
+import { CommandSet } from 'pip-services3-commons-node';
 import { SmsSettingsV1 } from '../data/version1/SmsSettingsV1';
 import { ISmsSettingsController } from './ISmsSettingsController';
 export declare class SmsSettingsController implements IConfigurable, IReferenceable, ICommandable, ISmsSettingsController {
@@ -24,18 +24,18 @@ export declare class SmsSettingsController implements IConfigurable, IReferencea
     configure(config: ConfigParams): void;
     setReferences(references: IReferences): void;
     getCommandSet(): CommandSet;
-    private settingsToPublic(settings);
+    private settingsToPublic;
     getSettingsByIds(correlationId: string, recipientIds: string[], callback: (err: any, settings: SmsSettingsV1[]) => void): void;
     getSettingsById(correlationId: string, recipientId: string, callback: (err: any, settings: SmsSettingsV1) => void): void;
     getSettingsByPhoneSettings(correlationId: string, phone: string, callback: (err: any, settings: SmsSettingsV1) => void): void;
-    private verifyAndSaveSettings(correlationId, oldSettings, newSettings, callback);
-    private sendVerificationMessage(correlationId, newSettings);
+    private verifyAndSaveSettings;
+    private sendVerificationMessage;
     setSettings(correlationId: string, settings: SmsSettingsV1, callback: (err: any, settings: SmsSettingsV1) => void): void;
     setVerifiedSettings(correlationId: string, settings: SmsSettingsV1, callback: (err: any, settings: SmsSettingsV1) => void): void;
     setRecipient(correlationId: string, recipientId: string, name: string, phone: string, language: string, callback?: (err: any, settings: SmsSettingsV1) => void): void;
     setSubscriptions(correlationId: string, recipientId: string, subscriptions: any, callback?: (err: any, settings: SmsSettingsV1) => void): void;
     deleteSettingsById(correlationId: string, recipientId: string, callback?: (err: any) => void): void;
     resendVerification(correlationId: string, recipientId: string, callback?: (err: any) => void): void;
-    private logActivity(correlationId, settings, activityType);
+    private logActivity;
     verifyPhone(correlationId: string, recipientId: string, code: string, callback?: (err: any) => void): void;
 }

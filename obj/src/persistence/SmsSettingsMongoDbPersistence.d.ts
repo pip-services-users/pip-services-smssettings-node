@@ -1,4 +1,4 @@
-import { IdentifiableMongoDbPersistence } from 'pip-services-mongodb-node';
+import { IdentifiableMongoDbPersistence } from 'pip-services3-mongodb-node';
 import { SmsSettingsV1 } from '../data/version1/SmsSettingsV1';
 import { ISmsSettingsPersistence } from './ISmsSettingsPersistence';
 export declare class SmsSettingsMongoDbPersistence extends IdentifiableMongoDbPersistence<SmsSettingsV1, string> implements ISmsSettingsPersistence {

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
-const pip_services_mongodb_node_1 = require("pip-services-mongodb-node");
+const pip_services3_mongodb_node_1 = require("pip-services3-mongodb-node");
 const SmsSettingsMongoDbSchema_1 = require("./SmsSettingsMongoDbSchema");
-class SmsSettingsMongoDbPersistence extends pip_services_mongodb_node_1.IdentifiableMongoDbPersistence {
+class SmsSettingsMongoDbPersistence extends pip_services3_mongodb_node_1.IdentifiableMongoDbPersistence {
     constructor() {
         super('sms_settings', SmsSettingsMongoDbSchema_1.SmsSettingsMongoDbSchema());
     }

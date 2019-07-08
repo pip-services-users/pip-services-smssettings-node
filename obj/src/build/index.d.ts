@@ -1,1 +1,0 @@
-export { SmsSettingsServiceFactory } from './SmsSettingsServiceFactory';

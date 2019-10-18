@@ -17,11 +17,11 @@ class SmsSettingsServiceFactory extends pip_services3_components_node_1.Factory 
         this.registerAsType(SmsSettingsServiceFactory.HttpServiceDescriptor, SmsSettingsHttpServiceV1_1.SmsSettingsHttpServiceV1);
     }
 }
+exports.SmsSettingsServiceFactory = SmsSettingsServiceFactory;
 SmsSettingsServiceFactory.Descriptor = new pip_services3_commons_node_1.Descriptor("pip-services-smssettings", "factory", "default", "default", "1.0");
 SmsSettingsServiceFactory.MemoryPersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-smssettings", "persistence", "memory", "*", "1.0");
 SmsSettingsServiceFactory.FilePersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-smssettings", "persistence", "file", "*", "1.0");
 SmsSettingsServiceFactory.MongoDbPersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-smssettings", "persistence", "mongodb", "*", "1.0");
 SmsSettingsServiceFactory.ControllerDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-smssettings", "controller", "default", "*", "1.0");
 SmsSettingsServiceFactory.HttpServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-smssettings", "service", "http", "*", "1.0");
-exports.SmsSettingsServiceFactory = SmsSettingsServiceFactory;
 //# sourceMappingURL=SmsSettingsServiceFactory.js.map

@@ -412,7 +412,7 @@ class SmsSettingsController {
         });
     }
 }
+exports.SmsSettingsController = SmsSettingsController;
 SmsSettingsController._phoneRegex = /^\+[0-9]{10,15}$/;
 SmsSettingsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-smssettings:persistence:*:*:1.0', 'dependencies.activities', 'pip-services-activities:client:*:*:1.0', 'dependencies.msgtemplates', 'pip-services-msgtemplates:client:*:*:1.0', 'dependencies.smsdelivery', 'pip-services-sms:client:*:*:1.0', 'message_templates.verify_phone.subject', 'Verify phone number', 'message_templates.verify_phone.text', 'Verification code for {{phone}} is {{ code }}.', 'options.magic_code', null, 'options.signature_length', 100, 'options.verify_on_create', true, 'options.verify_on_update', true);
-exports.SmsSettingsController = SmsSettingsController;
 //# sourceMappingURL=SmsSettingsController.js.map

@@ -1,6 +1,6 @@
 {
     "name": "pip-services-smssettings-node",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Conceptual Vision Consulting LLC",
     "description": "Sms settings sending microservice in Node.js",
     "contributors": [
@@ -45,9 +45,9 @@
         "pip-services3-aws-node": "^3.0.0",
         "pip-services3-rpc-node": "^3.0.0",
         "pip-services3-mongoose-node": "^3.0.0",
-        "pip-clients-activities-node": "git+ssh://git@github.com:pip-services-users/pip-clients-activities-node.git",
-        "pip-clients-msgtemplates-node": "git+ssh://git@github.com:pip-services-content/pip-clients-msgtemplates-node.git",
-        "pip-clients-sms-node": "git+ssh://git@github.com:pip-services-infrastructure/pip-clients-sms-node.git"
+        "pip-clients-activities-node": "^1.0.0",
+        "pip-clients-msgtemplates-node": "^1.1.0",
+        "pip-clients-sms-node": "^1.0.0"
     },
     "devDependencies": {
         "@types/node": "*",

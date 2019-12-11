@@ -1,6 +1,6 @@
 {
     "name": "pip-services-smssettings-node",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "author": "Conceptual Vision Consulting LLC",
     "description": "Sms settings sending microservice in Node.js",
     "contributors": [
@@ -44,10 +44,10 @@
         "pip-services3-data-node": "^3.0.0",
         "pip-services3-aws-node": "^3.0.0",
         "pip-services3-rpc-node": "^3.0.0",
-        "pip-services3-mongoose-node": "^3.0.0",
-        "pip-clients-activities-node": "^1.0.0",
-        "pip-clients-msgtemplates-node": "^1.1.0",
-        "pip-clients-sms-node": "^1.0.0"
+        "pip-services3-mongodb-node": "^3.0.0",
+        "pip-clients-activities-node": "^1.0.1",
+        "pip-clients-msgtemplates-node": "^1.1.1",
+        "pip-clients-sms-node": "^1.0.1"
     },
     "devDependencies": {
         "@types/node": "*",
@@ -56,11 +56,8 @@
         "@types/chai": "*",
         "@types/mocha": "*",
         "@types/mongodb": "^2.1.38",
-        "@types/mongoose": "^4.7.4",
         "restify": "^4.3.0",
         "chai": "*",
-        "matcha": "*",
-        "mocha": "*",
-        "typescript": "~3.2.0"
+        "mocha": "*"
     }
 }
